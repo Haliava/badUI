@@ -1,5 +1,6 @@
 from flask import Flask, render_template, redirect, abort, request, Markup
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
+from flask_ngrok import run_with_ngrok
 from flask_wtf import FlaskForm
 from wtforms import PasswordField, StringField, TextAreaField, SubmitField, BooleanField, RadioField
 from wtforms.fields.html5 import EmailField
@@ -10,6 +11,7 @@ from data import db_session
 from data.users import User, Article, Request, Comment
 
 app = Flask(__name__)
+run_with_ngrok(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 db_session.global_init('db/bad_ui.sqlite')
@@ -259,6 +261,6 @@ def check_for_new_mods():
 schedule.every().minute.do(check_for_new_mods)
 
 if __name__ == '__main__':
-    app.run(port='8080')
+    app.run()
     while True:
         schedule.run_pending()
