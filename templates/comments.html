@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<p class="display-4">Вы смотрите комментарии к записи #{{ art_id }}</p>
+{% if art_anon %}
+<p class="display-5">Автор решил остаться анонимным</p>
+{% else %}
+<p class="display-5">Автор: {{ author }}</p>
+{% endif %}
+<div class="text-container">
+{% for elem in comm %}
+    <p style="border: 1px solid royalblue; padding: 15px; margin: 50px;">{{ elem.text }}</p>
+{% endfor %}
+</div>
+<form action="" method="post" style="border: 1px solid black;">
+    {{ form.hidden_tag() }}
+    {{ form.csrf_token }}
+    <p>
+        {{ form.text_data.label }}<br>
+        {{ form.text_data(class="form-control") }}<br>
+        {% for error in form.text_data.errors %}
+            <p class="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
+    <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+    {{message}}
+</form>
+{% endblock %}

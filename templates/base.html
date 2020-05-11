@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <title>{{title}}</title>
+</head>
+<body>
+<!-- jQuery CDN - Slim version (=without AJAX) -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<!-- Popper.JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+        integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+        crossorigin="anonymous"></script>
+<!-- Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
+        integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+        crossorigin="anonymous"></script>
+
+<header></header>
+<div id="wrapper" style="float: left;">
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            <a class="navbar-brand" href="/index">Bad UI collection</a>
+        </div>
+        <ul class="list-unstyled components">
+            {% if current_user.is_authenticated %}
+            <p class="navbar-brand">{{ current_user.name }}</p>
+            {% endif %}
+            {% if current_user.is_moderator %}
+            <p class="navnar-brand">Модератор</p>
+            {% endif %}
+            <li class="active">
+                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Мои
+                    посты</a>
+                <ul class="collapse list-unstyled" id="homeSubmenu">
+                    {% if current_user.is_authenticated %}
+                    {% if not current_user.articles %}
+                    <li>
+                        <a href="#">У вас пока нет записей</a>
+                    </li>
+                    {% else %}
+                    {% for article in current_user.articles %}
+                    {% set article_url = "/" ~ article.id %}
+                    {% set delete_url = "/delete_article/" ~ article.id %}
+                    {% set edit_url = "/article/" ~ article.id %}
+                    <li>
+                        <p>
+                        <a href={{ article_url }}>
+                            Запись #{{ loop.index }}
+                            <img src="{{ article.thumbnail }}" width="25" height="25">
+                        </a>
+                        <a href={{ edit_url }}>
+                            Редактировать запись
+                        </a>
+                        <a href={{ delete_url }}>
+                            Удалить запись
+                        </a>
+                        </p>
+                    </li>
+                    {% endfor %}
+                    {% endif %}
+                    {% else %}
+                    <li>
+                        <a href="/login">Вы не авторизованы</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </li>
+            <li>
+                <a href="/article">Добавить пост</a>
+            </li>
+            <li>
+                <a href="/moderatorRequest">Стать модератором</a>
+            </li>
+            <li>
+                <a href="/about">О нас</a>
+            </li>
+        </ul>
+        {% if not current_user.is_authenticated %}
+        <p>
+            <a class="btn btn-primary w-100" href="/register">Зарегистрироваться</a>
+            <a class="btn btn-success w-100" href="/login">Войти</a>
+        </p>
+        {% else %}
+        <p>
+            <a class="btn btn-success w-100" href="/logout">Выйти</a>
+        </p>
+        {% endif %}
+    </nav>
+</div>
+<main role="main" class="container">
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
+</main>
+</body>
+</html>

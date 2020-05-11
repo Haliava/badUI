@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid w-100 justify-content-center">
+        <h1>So bad it's good</h1>
+    </div>
+</nav>
+{% for item in articles %}
+{% set article_url = "/" ~ item.id %}
+{% set comm_url = "/comments/" ~ article_url %}
+<p>Пост #{{ item.id }}</p>
+<a href="{{ article_url }}" style="display: inline-block;">
+    <img src="{{ item.thumbnail }}" height="150" width="250">
+    {% if not item.is_anonymous%}
+    <div>Автор: {{ item.author_name }}</div>
+    {% else %}
+    <div>Автор анонимен</div>
+    {% endif %}
+    {% if current_user.is_moderator %}
+    <a href="/delete_article/{{ item.id }}">
+        <img src="https://pluspng.com/img-png/red-cross-png-red-cross-png-file-2000.png" height="25" width="25"
+        style="margin-left: -27px;">
+    </a>
+    {% endif %}
+    <div>Просмотры: {{ item.views }}</div>
+    <a href="{{ comm_url }}">
+        <div>Комментарии ({{ item.comments|length }})</div>
+    </a>
+</a>
+{% endfor %}
+{% endblock %}

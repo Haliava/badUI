@@ -1,0 +1,11 @@
+{{ html|safe }}
+{% if css %}
+<style>
+    {{ css|safe }}
+</style>
+{% endif %}
+{% if script %}
+<script type="text/javascript">
+    {{ script|safe }}
+</script>
+{% endif %}

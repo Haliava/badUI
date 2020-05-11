@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form action="" method="post">
+    {{ form.hidden_tag() }}
+    {{ form.csrf_token }}
+    <p>
+        {{ form.thumbnail.label }}<br>
+        {{ form.thumbnail(class="form-control") }}<br>
+        {% for error in form.thumbnail.errors %}
+            <p class="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.html_code.label }}<br>
+        {{ form.html_code(class="form-control") }}<br>
+        {% for error in form.html_code.errors %}
+            <p content="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.script_code.label }}<br>
+        {{ form.script_code(class="form-control") }}<br>
+        {% for error in form.script_code.errors %}
+            <p content="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.css_code.label }}<br>
+        {{ form.css_code(class="form-control") }}<br>
+        {% for error in form.css_code.errors %}
+            <p content="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
+    <p>{{ form.is_anonymous() }} {{ form.is_anonymous.label }}</p>
+    <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+    {{message}}
+</form>
+{% endblock %}

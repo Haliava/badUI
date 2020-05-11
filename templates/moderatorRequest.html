@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% if not current_user.is_moderator and current_user.is_authenticated %}
+<form action="" method="post">
+    {{ form.hidden_tag() }}
+    {{ form.csrf_token }}
+    <p>
+        {{ form.introduction.label }}<br>
+        {{ form.introduction(class="form-control") }}<br>
+        {% for error in form.introduction.errors %}
+            <p class="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.about.label }}<br>
+        {{ form.about(class="form-control") }}<br>
+        {% for error in form.about.errors %}
+            <p content="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
+    <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+    {{message}}
+</form>
+{% elif not current_user.is_authenticated %}
+<p>Авторизуйтесь, чтобы подать заявку</p>
+{% else %}
+<p>Вы уже модератор</p>
+{% endif %}
+{% endblock %}
