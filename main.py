@@ -259,5 +259,6 @@ def check_for_new_mods():
 schedule.every().minute.do(check_for_new_mods)
 
 if __name__ == '__main__':
+    app.run(port='8080')
     while True:
         schedule.run_pending()
