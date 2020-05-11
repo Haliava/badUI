@@ -259,6 +259,5 @@ def check_for_new_mods():
 schedule.every().minute.do(check_for_new_mods)
 
 if __name__ == '__main__':
-    app.run()
     while True:
         schedule.run_pending()
