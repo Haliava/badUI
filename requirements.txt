@@ -1,2 +1,2 @@
-schedule
-flask
+schedule==0.6.0
+flask==1.0.3
