@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, abort, request, Markup
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
-from flask_ngrok import run_with_ngrok
+#from flask_ngrok import run_with_ngrok
 from flask_wtf import FlaskForm
 from wtforms import PasswordField, StringField, TextAreaField, SubmitField, BooleanField
 from wtforms.fields.html5 import EmailField
