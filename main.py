@@ -6,6 +6,7 @@ from wtforms import PasswordField, StringField, TextAreaField, SubmitField, Bool
 from wtforms.fields.html5 import EmailField
 from wtforms.validators import DataRequired
 from apscheduler.schedulers.background import BackgroundScheduler
+import os
 
 from data import db_session
 from data.users import User, Article, Request, Comment
@@ -314,4 +315,5 @@ scheduler.add_job(func=check_for_new_mods, trigger="interval", seconds=5)
 scheduler.start()
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
