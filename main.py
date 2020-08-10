@@ -314,4 +314,4 @@ scheduler.add_job(func=check_for_new_mods, trigger="interval", seconds=5)
 scheduler.start()
 
 if __name__ == '__main__':
-    app.run()
+    app.run(port=3000)
